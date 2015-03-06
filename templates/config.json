@@ -1,0 +1,28 @@
+{
+    "port": 5678,
+    "registryFile": "<%= @install_dir %>/repository.json",
+    "timeout": 144000,
+    "disablePublic": false,
+    "publicRegistry": "http://bower.herokuapp.com/packages/",
+    "authentication": {
+        "enabled": true,
+        "key": "<%= @authentication_key %>"
+    },
+    "repositoryCache": {
+        "cachePrivate": true,
+        "git": {
+            "enabled": true,
+            "cacheDirectory": "<%= @install_dir %>/cache_git",
+            "host": "<%= @hostname %>",
+            "port": 6789,
+            "refreshTimeout": 10
+        },
+        "svn": {
+            "enabled": true,
+            "cacheDirectory": "<%= @install_dir %>/cache_svn",
+            "host": "<%= @hostname %>",
+            "port": 7891,
+            "refreshTimeout": 10
+        }
+    }
+}

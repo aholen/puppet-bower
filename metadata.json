@@ -1,0 +1,14 @@
+{
+  "name": "openstackci-bower",
+  "version": "0.0.1",
+  "author": "Openstack CI",
+  "summary": "Puppet module for a Bower Registry Mirror",
+  "license": "Apache 2.0",
+  "source": "git://git.openstack.org/openstack-infra/puppet-bower.git",
+  "dependencies": [
+    {
+        "name": "puppetlabs/nodejs",
+        "version_requirement": "= 0.7.1"
+    }
+  ]
+}
