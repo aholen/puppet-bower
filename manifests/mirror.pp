@@ -20,12 +20,13 @@ class bower::mirror () {
   $group = $::bower::params::group
   $hostname = $::bower::params::hostname
   $authentication_key = $::bower::params::authentication_key
-
-  # NodeJS.
-  package { ['nodejs', 'nodejs-legacy', 'npm', 'git', 'subversion']:
-    ensure => present
+  $install_packages = $::bower::params::install_packages
+  if ($install_packages == true) {
+    # NodeJS.
+    package { ['nodejs', 'nodejs-legacy', 'npm', 'git', 'subversion']:
+      ensure => present
+    }
   }
-
   # Install private-bower
   package { 'private-bower':
     ensure   => present,
