@@ -31,7 +31,6 @@ class bower::mirror () {
   package { 'private-bower':
     ensure   => present,
     provider => 'npm',
-    require  => Package['npm']
   }
 
   # Install the service. Must be upstart, as sending TERM or INT causes service

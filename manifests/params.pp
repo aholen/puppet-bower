@@ -26,7 +26,7 @@ class bower::params (
   $homedir            = '/home',
   $server_admin       = undef,
   $hostname           = $::ipaddress,
-  $install_packages   = true
+  $install_packages   = true,
   # Authentication key that allows registration of private modules.
   $authentication_key = 'changeme',
 ) {

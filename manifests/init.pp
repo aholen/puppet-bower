@@ -15,7 +15,7 @@
 class bower (
   $hostname              = $::ipaddress,
   $authentication_key    = 'changeme',
-  $homedir               = '/home'
+  $homedir               = '/home',
   $install_packages      = true
 ) {
 
