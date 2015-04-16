@@ -16,7 +16,9 @@ class bower (
   $hostname              = $::ipaddress,
   $authentication_key    = 'changeme',
   $homedir               = '/home'
+  $install_packages      = true
 ) {
+
 
 	# Configure the entire bower instance. This does not install anything,
 	# but ensures that variables are consistent across all modules.
@@ -24,6 +26,7 @@ class bower (
 		hostname               => $hostname,
     authentication_key     => $authentication_key,
     homedir                => $homedir,
+    install_packages       => $install_packages
 	}
 
   include ::bower::user
