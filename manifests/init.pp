@@ -15,6 +15,7 @@
 class bower (
   $hostname              = $::ipaddress,
   $authentication_key    = 'changeme',
+  $homedir               = '/home'
 ) {
 
 	# Configure the entire bower instance. This does not install anything,
@@ -22,6 +23,7 @@ class bower (
 	class { '::bower::params':
 		hostname               => $hostname,
     authentication_key     => $authentication_key,
+    homedir                => $homedir,
 	}
 
   include ::bower::user
