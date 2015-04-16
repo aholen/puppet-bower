@@ -15,7 +15,7 @@
 class bower::user (
   $user  = $::bower::params::user,
   $group = $::bower::params::group,
-  $home  = "/home/${::bower::params::user}",
+  $home  = "/${::bower::params::homedir}/${::bower::params::user}",
 ) {
 
   group { $group:

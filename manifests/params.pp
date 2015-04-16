@@ -23,6 +23,7 @@ class bower::params (
   # The user under which bower will run.
   $user               = 'bower',
   $group              = 'bower',
+  $homedir            = '/home',
   $server_admin       = undef,
   $hostname           = $::ipaddress,
 
