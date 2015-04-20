@@ -39,7 +39,7 @@ class bower::mirror () {
     owner   => root,
     group   => root,
     mode    => '0755',
-    content => template('bower/private-bower.conf'),
+    content => template('bower/private-bower'),
     notify  => Service['private-bower'],
     before  => Service['private-bower'],
 #    require => Package['private-bower']
