@@ -16,7 +16,8 @@ class bower (
   $hostname              = $::ipaddress,
   $authentication_key    = 'changeme',
   $homedir               = '/home',
-  $install_packages      = true
+  $install_packages      = true,
+  $url                   = $::ipaddress
 ) {
 
 
@@ -26,7 +27,8 @@ class bower (
 		hostname               => $hostname,
     authentication_key     => $authentication_key,
     homedir                => $homedir,
-    install_packages       => $install_packages
+    install_packages       => $install_packages,
+    url                    => $url
 	}
 
   include ::bower::user

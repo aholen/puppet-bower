@@ -25,6 +25,7 @@ class bower::params (
   $group              = 'bower',
   $homedir            = '/home',
   $server_admin       = undef,
+  $url                = undef,
   $hostname           = $::ipaddress,
   $install_packages   = true,
   # Authentication key that allows registration of private modules.
