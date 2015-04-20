@@ -7,7 +7,7 @@
 # processname: private-bower
 # pidfile: <$= @install_dir %>.pid
 # config: <$= @install_dir %>/config.json
-PRIVATEBOWER_INSTALL_DIR=<$= @install_dir %>
+PRIVATEBOWER_INSTALL_DIR=<%= @install_dir %>
 PRIVATEBOWER_BIN="$PRIVATEBOWER_INSTALL_DIR"/node_modules/private-bower/bin/private-bower
 PRIVATEBOWER_USER=<%= @user %>
 PRIVATEBOWER_LOG="$PRIVATEBOWER_INSTALL_DIR"/daemon.log
