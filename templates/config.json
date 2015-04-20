@@ -18,14 +18,14 @@
         "git": {
             "enabled": true,
             "cacheDirectory": "<%= @install_dir %>/cache_git",
-            "host": "<%= @hostname %>",
+            "host": "<%= @url %>",
             "port": 6789,
             "refreshTimeout": 10
         },
         "svn": {
             "enabled": true,
             "cacheDirectory": "<%= @install_dir %>/cache_svn",
-            "host": "<%= @hostname %>",
+            "host": "<%= @url %>",
             "port": 7891,
             "refreshTimeout": 10
         }
