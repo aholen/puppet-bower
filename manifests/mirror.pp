@@ -21,21 +21,20 @@ class bower::mirror () {
   $hostname = $::bower::params::hostname
   $authentication_key = $::bower::params::authentication_key
   $install_packages = $::bower::params::install_packages
-  if ($install_packages == true) {
-    # NodeJS.
-    package { ['nodejs', 'nodejs-legacy', 'npm', 'git', 'subversion']:
-      ensure => present
-    }
+
+ nodejs::npm { "${install_dir}:private-bower":
+    ensure       => present,
+    require      => [File[$install_dir],User[$user]],
+    notify       => File['/etc/init.d/private-bower'],
+    exec_as_user => $user,
+    exec_as_user_home => $install_dir,
   }
-  # Install private-bower
-  package { 'private-bower':
-    ensure   => present,
-    provider => 'npm',
-  }
+
+
 
   # Install the service. Must be upstart, as sending TERM or INT causes service
   # to leave zombie git and svnserve daemons.
-  file { '/etc/init/private-bower.conf':
+  file { '/etc/init.d/private-bower':
     ensure  => file,
     owner   => root,
     group   => root,
@@ -43,7 +42,7 @@ class bower::mirror () {
     content => template('bower/private-bower.conf'),
     notify  => Service['private-bower'],
     before  => Service['private-bower'],
-    require => Package['private-bower']
+#    require => Package['private-bower']
   }
 
   # Create working directories.

@@ -1,0 +1,85 @@
+#!/bin/sh
+#
+# private-bower deamon control script
+#
+# chkconfig: - 80 20
+# description: private-bower Service 
+# processname: private-bower
+# pidfile: <$= @install_dir %>.pid
+# config: <$= @install_dir %>/config.json
+PRIVATEBOWER_INSTALL_DIR=<$= @install_dir %>
+PRIVATEBOWER_BIN="$PRIVATEBOWER_INSTALL_DIR"/node_modules/private-bower/bin/private-bower
+PRIVATEBOWER_USER=<%= @user %>
+PRIVATEBOWER_LOG="$PRIVATEBOWER_INSTALL_DIR"/daemon.log
+PRIVATEBOWER_PIDFILE="$PRIVATEBOWER_INSTALL_DIR"/srv.pid
+PRIVATEBOWER_CONFIGFILE="$PRIVATEBOWER_INSTALL_DIR"/config.json
+EXEC_DIR="$PRIVATEBOWER_INSTALL_DIR"
+STOP_TIMEOUT=10
+prog=private-bower
+
+ECHO_CMD=/bin/echo
+RM_CMD=/bin/rm
+SU_CMD=/bin/su
+CAT_CMD=/bin/cat
+KILL_CMD=/bin/kill
+
+start() {
+		if [ -f $PRIVATEBOWER_PIDFILE ]; then
+		    read ppid < $PRIVATEBOWER_PIDFILE
+		    if [ `ps --pid $ppid 2> /dev/null | grep -c $ppid 2> /dev/null` -eq '1' ]; then
+		      $ECHO_CMD -n "$prog is already running"
+		      failure
+		      $ECHO_CMD
+		      return 1 
+		    else
+		      $RM_CMD -f $PRIVATEBOWER_PIDFILE
+		    fi
+		  fi
+        $ECHO_CMD -n $"Starting $prog: "
+        	$SU_CMD - $PRIVATEBOWER_USER -c "cd $EXEC_DIR ; nohup $PRIVATEBOWER_BIN --config $PRIVATEBOWER_CONFIGFILE >>$PRIVATEBOWER_LOG 2>&1 & echo \$! >$PRIVATEBOWER_PIDFILE"        	
+        return $?
+}
+
+stop() {
+        $ECHO_CMD -n $"Stopping $prog: "
+        $KILL_CMD $($CAT_CMD ${PRIVATEBOWER_PIDFILE})
+        RETVAL=$?
+        $ECHO_CMD
+        [ $RETVAL = 0 ] && rm -f ${PRIVATEBOWER_PIDFILE}
+}
+
+status() {
+  if [ -f $PRIVATEBOWER_PIDFILE ]; then
+    read ppid < $PRIVATEBOWER_PIDFILE
+    if [ `ps --pid $ppid 2> /dev/null | grep -c $ppid 2> /dev/null` -eq '1' ]; then
+      $ECHO_CMD "$prog is running (pid $ppid)"
+      return 0
+    else
+      $ECHO_CMD "$prog dead but pid file exists"
+      return 1
+    fi
+  fi
+  $ECHO_CMD "$prog is not running"
+  return 3
+}
+
+case "$1" in
+  start)
+      start
+      ;;
+  stop)
+      stop
+      ;;
+  restart)
+      $0 stop
+      $0 start
+      ;;
+  status)
+      status
+      ;;
+  *)
+      ## If no parameters are given, print which are avaiable.
+      $ECHO_CMD "Usage: $0 {start|stop|status|restart}"
+      exit 1
+      ;;
+esac
