@@ -22,7 +22,12 @@ class bower::mirror () {
   $authentication_key = $::bower::params::authentication_key
   $install_packages = $::bower::params::install_packages
 
- nodejs::npm { "${install_dir}:private-bower":
+  package { ['git', 'git-daemon', 'subversion']:
+    ensure => present
+  }
+
+  
+  nodejs::npm { "${install_dir}:private-bower":
     ensure       => present,
     require      => [File[$install_dir],User[$user]],
     notify       => File['/etc/init.d/private-bower'],
